@@ -1,0 +1,10 @@
+<title>Posts</title>
+
+<a href="/posts/new">New post</a> <br/> 
+<a href="/register">Register</a>  
+
+<h1>Posts</h1>
+{% for post in posts %}
+<a href="/posts/{{ post.id }}">{{ post.name }}</a>
+<br/>
+{% endfor %}
