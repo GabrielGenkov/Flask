@@ -1,28 +1,30 @@
-#from database import DB
-import sqlite3 as sql
-
-#con = sql.connect('database.db')
-#con.execute('CREATE TABLE IF NOT EXISTS User (ID IINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,' + 'Username TEXT NOT NULL UNIQUE, Password TEXT NOT NULL)')
-#con.close
+from database import DB
 
 class User:
-    def __init__(self, id, username, password, mail, address, mobile):
-        self.id = id
-        self.username = username
-        self.password = password
-        self.mail = mail
-        self.address = address
-        self.mobile = mobile
-        
+	def __init__(self, id, username, mail, address, mobile, password):
+		self.id = id
+		self.username = username
+		self.mail = mail
+		self.address = address
+		self.mobile = mobile
+		self.password = password
 
-    def create(self):
-        with DB() as db:
-            values = (self.username, self.password)
-            db.execute('''
-                INSERT INTO Users (username, mail, address, mobile, password)
-                VALUES (?, ?, ?, ?, ?)''', values)
-            return self
-     
-    def verify_password(self, password):
-        return self.password == password
-		
+	def create(self):
+		with DB() as db:  
+			values = (self.username, self.mail, self.address, self.mobile, self.password)
+			db.execute('''
+				INSERT INTO Users (username, mail, address, mobile, password)
+				VALUES (?, ?, ?, ?, ?)''', values)
+			return self
+
+	@staticmethod
+	def load(mail, password):
+		with DB() as db:
+			values = db.execute("SELECT * from Users WHERE mail = ?  AND password = ? ", (mail,password,)).fetchone()
+			
+		return User(*values)
+			
+			
+			
+	def verify_password(self, password):
+		return self.password == password
