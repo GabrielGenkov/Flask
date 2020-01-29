@@ -12,6 +12,11 @@ class User:
 	def create(self):
 		with DB() as db:  
 			values = (self.username, self.mail, self.address, self.mobile, self.password)
+			check = db.execute('''
+				SELECT mail, mobile FROM Users WHERE mail=? OR mobile=?''', 
+				(self.mail, self.mobile)).fetchone()
+			if check:
+				return None
 			db.execute('''
 				INSERT INTO Users (username, mail, address, mobile, password)
 				VALUES (?, ?, ?, ?, ?)''', values)
@@ -21,7 +26,8 @@ class User:
 	def load(mail, password):
 		with DB() as db:
 			values = db.execute("SELECT * from Users WHERE mail = ?  AND password = ? ", (mail,password,)).fetchone()
-			
+		if not values:
+			return None
 		return User(*values)
 			
 			

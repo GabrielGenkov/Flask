@@ -1,12 +1,29 @@
 <title>Posts</title>
 
-<a href="/posts/new">New post</a> <br/> 
-<a href="/register">Register</a> 
+{% if user != None %}
+<p>Hi {{ user.username }}!</p>
 
-<p>{{ user.username }}</p>
+<a href="/posts/new">New post</a> <br/>
+<a href="/posts/my_posts">My posts</a> <br/>
+<a href="/posts/my_cart">My cart</a> <br/>
+<a href="/logout">Logout</a> <br/>
+
+{% elif user == None %}
+<a href="/register">Register/Login</a>
+{% endif %}
 
 <h1>Posts</h1>
-
-
+{% for post in posts %}
+<div style="border-style: solid">
+	<h3>{{ post.title }}:</h3>
+	<p>{{ post.info }}</p>
+	<p>{{ post.price }}$</p>
+	{% if user.id == post.user %}
+	<button onclick="location.href = '/posts/edit';">edit</button>
+	<button onclick="location.href = '/posts/delete';">delete</button>
+	{% elif user != None %}
+	<button onclick="location.href = 'posts/buy';">buy</button>
+	{% endif %}
+</div>
 <br/>
-
+{% endfor %}
