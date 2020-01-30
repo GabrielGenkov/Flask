@@ -25,7 +25,7 @@ class User:
 	@staticmethod
 	def load(mail, password):
 		with DB() as db:
-			values = db.execute("SELECT * from Users WHERE mail = ?  AND password = ? ", (mail,password,)).fetchone()
+			values = db.execute("SELECT * from Users WHERE mail = ? AND password = ? ", (mail,password,)).fetchone()
 		if not values:
 			return None
 		return User(*values)

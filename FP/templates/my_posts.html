@@ -5,8 +5,12 @@
 	<h3>{{ post.title }}:</h3>
 	<p>{{ post.info }}</p>
 	<p>{{ post.price }}$</p>
-	<button onclick="location.href = '/posts/edit';">edit</button>
-	<button onclick="location.href = '/posts/delete';">delete</button>
+	{% if post.buyer == 0 %}
+	<button onclick="location.href = '/posts/{{ post.id }}/edit';">edit</button>
+	<button onclick="location.href = '/posts/{{ post.id }}/delete';">delete</button>
+	{% else %}
+	<p>Sent!</p>
+	{% endif %}
 </div>
 <br/>
 {% endif %}

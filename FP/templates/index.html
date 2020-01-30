@@ -14,16 +14,19 @@
 
 <h1>Posts</h1>
 {% for post in posts %}
+{% if post.buyer == 0 %}
 <div style="border-style: solid">
 	<h3>{{ post.title }}:</h3>
-	<p>{{ post.info }}</p>
-	<p>{{ post.price }}$</p>
+	<p>Information- {{ post.info }}</p>
+	<p>Price- {{ post.price }}$</p>
+	<p>Date- {{ post.date }}</p>
 	{% if user.id == post.user %}
-	<button onclick="location.href = '/posts/edit';">edit</button>
-	<button onclick="location.href = '/posts/delete';">delete</button>
+	<button onclick="location.href = '/posts/{{post.id}}/edit';">edit</button>
+	<button onclick="location.href = '/posts/{{post.id}}/delete';">delete</button>
 	{% elif user != None %}
-	<button onclick="location.href = 'posts/buy';">buy</button>
+	<button onclick="location.href = 'posts/{{post.id}}/buy';">buy</button>
 	{% endif %}
 </div>
 <br/>
+{% endif %}
 {% endfor %}

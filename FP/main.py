@@ -59,17 +59,62 @@ class Store:
 					request.form['price'],
 				)
 				Post(*values).create()
-				return redirect('/')
+			return redirect('/')
 		
 		@app.route('/posts/my_posts')
-		def my_post():
+		def my_posts():
 			if not self.user:
 				return redirect('/')
 			return render_template('my_posts.html',user = self.user, posts = Post.all())
 	
-		#@app.route('/posts/buy')
-		#def buy():
+		@app.route('/posts/my_cart')
+		def my_cart():
+			if not self.user:
+				return redirect('/')
+			return render_template('my_cart.html',user = self.user, posts = Post.all())
+		
+		@app.route('/posts/<int:id>/delete')
+		def delete(id):
+			if not self.user:
+				return redirect('/')
+			post = Post.find(id)
+			if post.user == self.user.id:
+				post.delete()
+			return redirect('/')
 	
+		@app.route('/posts/<int:id>/buy')
+		def buy(id):
+			if not self.user:
+				return redirect('/')
+			post = Post.find(id)
+			if post.user == self.user.id:
+				return redirect('/')
+			Post.bought(post.id, self.user.id)
+			return redirect('/')
+		
+		@app.route('/posts/<int:id>/edit', methods=['GET', 'POST'])
+		def edit(id):
+			if not self.user:
+				return redirect('/')
+			post = Post.find(id)
+			if post.user != self.user.id:
+				return redirect('/')
+			if request.method == 'GET':
+				return render_template('edit_post.html', post = post)
+			elif request.method == 'POST':
+				values = (
+					id,
+					None,
+					request.form['title'],
+					request.form['info'],
+					request.form['price'],
+					None,
+					None,
+					None
+				)
+				Post(*values).save()
+			return redirect('/')
+
 
 if __name__ == '__main__':
 	store = Store()
