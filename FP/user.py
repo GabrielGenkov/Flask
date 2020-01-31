@@ -29,6 +29,32 @@ class User:
 		if not values:
 			return None
 		return User(*values)
+
+	@staticmethod
+	def find_by_id(id):
+		if not id:
+			return None
+		with DB() as db:
+			row = db.execute(
+				'SELECT * FROM users WHERE id = ?',
+				(id,)
+			).fetchone()
+			if row:
+				return User(*row)
+			return None
+			
+	@staticmethod
+	def find_by_mail(mail):
+		if not mail:
+			return None
+		with DB() as db:
+			row = db.execute(
+				'SELECT * FROM users WHERE mail = ?',
+				(mail,)
+			).fetchone()
+			if row:
+				return User(*row)
+			return None
 			
 			
 			

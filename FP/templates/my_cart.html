@@ -1,11 +1,37 @@
-<h1>My Cart</h1>
-{% for post in posts %}
-{% if user.id == post.buyer %}
-<div style="border-style: solid">
-	<h3>{{ post.title }}:</h3>
-	<p>{{ post.info }}</p>
-	<p>{{ post.price }}$</p>
-</div>
-<br/>
-{% endif %}
-{% endfor %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My cart</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+	<style>
+		.cart {
+		background-color: #ffffcc;
+		border-style: solid;
+		border-width: thin;
+		} 
+		p{
+		color: #000000;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="start">
+		<div style="padding:16px">
+			<h1>My Cart</h1>
+			{% for post in posts %}
+			{% if user.id == post.buyer %}
+			<div class="cart">
+				<h3>{{ post.title }}:</h3>
+				<p>Information- {{ post.info }}</p>
+				<p>Price- {{ post.price }}$</p>
+				<p>Bought from {{user.find_by_id(post.user).username}}!</p>	
+			</div>
+			<br>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

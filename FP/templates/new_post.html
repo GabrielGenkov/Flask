@@ -1,12 +1,68 @@
-<form action="/posts/new" method="post">
-	<label>Title</label>
-	<input name="title"/>
-	</br>
-	<label>Info</label>
-	<input name="info"/>
-	</br>
-	<label>Price</label>
-	<input name="price"/>
-	</br>
-	<button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New post</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+	<style>
+		.input-group{
+		margin: auto;
+		top: 180px;
+		position: absolute;
+		width: 95%;
+		transition: .5s;
+		}
+		.input-field{
+		width: 100%;
+		padding: 10px 0px;
+		margin: 5px 5px;
+		border-left: 0;
+		border-top: 0;
+		border-right: 0;
+		border-bottom: 1px solid #999;
+		outline: none;
+		background: transparent;
+		}
+		.submit-btn{
+		width: 85%;
+		padding: 10px 30px;
+		cursor: pointer;
+		display: block;
+		margin: auto;
+		background: linear-gradient(to right, #ff105f, #ffad06);
+		border: 0;
+		outline: none; 
+		border-radius: 30px;
+		}
+		.myHeader {
+		padding: 60px;
+		text-align: center;
+		background: #1abc9c;
+		color: white;
+		font-size: 30px;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div class="start">
+		<div class="form-box">
+			<h1 class="myHeader">New post</h1>
+			<form action="/posts/new" method="post" class="input-group">
+				<label>Title</label>
+				<input name="title" type="text" class="input-field" placeholder="Title" required/>
+				</br>
+				<label>Info</label>
+				<input name="info" type="text" class="input-field" placeholder="Info" required/>
+				</br>
+				<label>Price</label>
+				<input name="price" type="number" class="input-field" placeholder="Price" required/>
+				</br>
+				<button type="submit" class="submit-btn">Submit</button>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

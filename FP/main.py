@@ -3,7 +3,7 @@ from flask import Flask, redirect, url_for, request, render_template
 from user import User
 from post import Post
 
-from flask_httpauth import HTTPBasicAuth
+#from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 
@@ -51,6 +51,7 @@ class Store:
 			if request.method == 'GET':
 				return render_template('new_post.html')
 			elif request.method == 'POST':
+				self.user = User.find_by_mail(self.user.mail)
 				values = (
 					None,
 					self.user,
