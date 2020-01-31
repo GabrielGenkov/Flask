@@ -90,6 +90,7 @@ class Store:
 			post = Post.find(id)
 			if post.user == self.user.id:
 				return redirect('/')
+			self.user = User.find_by_mail(self.user.mail)
 			Post.bought(post.id, self.user.id)
 			return redirect('/')
 		
